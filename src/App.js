@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect, img } from "react";
+import "./index.css";
+import moon from "./assets/images/moon.png";
+import sun from "./assets/images/sunny.png";
 
 function App() {
+  const [icon, setIcon] = useState(sun);
+  const [btnClass, setBtnClass] = useState("btn-container");
+  const [iconClass, setIconClass] = useState("icon-container");
+
+  useEffect(() => {
+    const newIconClass =
+      btnClass === "btn-container" ? "icon-container" : "icon-container-night";
+    const newIcon = btnClass === "btn-container" ? sun : moon;
+
+    setIconClass(newIconClass);
+    setIcon(newIcon);
+  }, [btnClass]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <button
+        className={btnClass}
+        onClick={() =>
+          btnClass === "btn-container"
+            ? setBtnClass("btn-container-night")
+            : setBtnClass("btn-container")
+        }
+      >
+        <div className={iconClass}>
+          <img src={icon} className="icon-img" />
+        </div>
+      </button>
     </div>
   );
 }
